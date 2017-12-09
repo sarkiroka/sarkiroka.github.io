@@ -1,13 +1,41 @@
 <html>
 	<head>
 		<title>sarkiroka</title>
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
+		<style>
+			#counter {
+				cursor: pointer;
+			}
+		</style>
 		<script>
-			setTimeout(function(){
-				window.location.replace('http://sarkiroka.hu');
-			},5000);
+			document.addEventListener('DOMContentLoaded', reset);
+
+			function tick() {
+				if (!window.counterElement) {
+					window.counterElement = document.getElementById('counter');
+					window.counterElement.addEventListener('click', reset)
+				}
+				if (!counter) {
+					window.location = 'http://sarkiroka.hu';
+				} else {
+					counterElement.innerHTML = counter;
+					counter--;
+					window.timeoutId = setTimeout(tick, 1000);
+				}
+			}
+			function reset() {
+				clearTimeout(window.timeoutId);
+				window.counter = 30;
+				tick();
+			}
 		</script>
 	</head>
 	<body>
-		<p>redirecting...</p>
+		<ul>
+			<li>
+				<a href="directed-graph/index.html">free online directed graph editor</a>
+			</li>
+		</ul>
+		<p>If you stay here too long time... <span id="counter"></span></p>
 	</body>
 </html>
