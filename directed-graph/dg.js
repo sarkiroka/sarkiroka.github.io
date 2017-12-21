@@ -64,6 +64,7 @@ function init(nodes, links) {
 
 	s.svg.append('svg:defs').append('svg:marker')
 		.attr('id', 'end-arrow')
+		.attr('class', 'graph')
 		.attr('viewBox', '0 -5 10 10')
 		.attr('refX', 20) // milyen messze van a nyil
 		.attr('markerWidth', 3)
@@ -75,6 +76,7 @@ function init(nodes, links) {
 
 	s.svg.append('svg:defs').append('svg:marker')
 		.attr('id', 'start-arrow')
+		.attr('class', 'graph')
 		.attr('viewBox', '0 -5 10 10')
 		.attr('refX', 4) // nem a start cucc, max a dupla
 		.attr('markerWidth', 3)
@@ -84,9 +86,23 @@ function init(nodes, links) {
 		.attr('d', 'M10,-5L0,0L10,5')
 		.attr('fill', '#000');
 
+	s.dragSvg = d3.behavior.zoom()
+		.on('zoom', function(){
+			console.log('z',d3.event.scale);
+			d3.selectAll('.graph').attr('transform', 'scale(' + d3.event.scale + ')');
+			return true;
+		})
+		.on('zoomstart', function(){
+			console.log('zs')
+		})
+		.on('zoomend', function(){
+			console.log('ze')
+		});
+	s.svg.call(s.dragSvg).on('dblclick.zoom', null);
+
 // line displayed when dragging new nodes
 	s.drag_line = s.svg.append('svg:path')
-		.attr('class', 'link dragline hidden')
+		.attr('class', 'link dragline hidden graph')
 		.attr('d', 'M0,0L0,0');
 
 // handles to link and node element groups
@@ -120,7 +136,7 @@ function init(nodes, links) {
 
 		// add new links
 		s.path.enter().append('svg:path')
-			.attr('class', 'link')
+			.attr('class', 'link graph')
 			.classed('selected', function (d) {
 				return d === selected_link;
 			})
@@ -164,7 +180,7 @@ function init(nodes, links) {
 		var g = s.circle.enter().append('svg:g');
 
 		g.append('svg:circle')
-			.attr('class', 'node')
+			.attr('class', 'node graph')
 			.attr('r', 30) // kör sugár
 			.style('fill', function (d) {
 				return (d === selected_node) ? d3.rgb(s.colors(d.id)).brighter().toString() : s.colors(d.id);
@@ -257,7 +273,7 @@ function init(nodes, links) {
 		g.append('svg:text')
 			.attr('x', 0)
 			.attr('y', 4)
-			.attr('class', 'id')
+			.attr('class', 'id graph')
 			.text(function (d) {
 				return d.title;
 			});
@@ -421,12 +437,12 @@ function init(nodes, links) {
 	});
 	function saveToFile(callback) {
 		var json = convertToJSON(nodes, links);
-		var blob = new Blob([json], {type: "text/plain;charset=utf-8"});
+		var blob = new Blob([json], {type: 'text/plain;charset=utf-8'});
 		if (typeof callback == 'function') {
 			// not working: saveAs.onwriteend = callback;
 			setTimeout(callback, 500);
 		}
-		saveAs(blob, "data.json");
+		saveAs(blob, 'data.json');
 		dirty = 0;
 	}
 
