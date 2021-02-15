@@ -1,0 +1,95 @@
+<html>
+  <head><title>awesome cursor</title></head>
+  <body>
+    <h1>view the source</h1>
+    <script>
+
+//<![CDATA[
+
+var text = 'sarkiroka idegesítő szöveg ami követi az egérmutatót';
+
+function moveid(e, t, n) {
+    if (ns4) {
+        e.moveTo(t, n)
+    } else {
+        e.style.left = t + "px";
+        e.style.top = n + "px"
+    }
+}
+
+function animate(e) {
+    x1 = Xoff +
+        (ie4 || ie5 ? event.clientX + document.body.scrollLeft : e.pageX);
+    y1 = Yoff + (ie4 || ie5 ? event.clientY + document.body.scrollTop : e.pageY)
+}
+
+function getidleft(e) {
+    if (ns4) {return e.left;}
+    else return parseInt(e.style.left)
+}
+
+function getidtop(e) {
+    if (ns4) {
+        return e.top;
+    } else
+        return parseInt(e.style.top)
+}
+
+function getwindowwidth() {
+    if (ie4 || ie5) {
+        return document.body.clientWidth + document.body.scrollLeft;
+    } else {
+        return window.innerWidth + pageXOffset
+    }
+}
+
+function movetxts() {
+    for (i = text.length; i > 1; i = i - 1) {
+        if (getidleft(txtA[i - 1]) + txtw * 2 >=
+            getwindowwidth()) {
+            moveid(txtA[i - 1], 0, -1e3);
+            moveid(txtA[i], 0, -1e3)
+        } else moveid(txtA[i]
+            , getidleft(txtA[i - 1]) + txtw, getidtop(txtA[i - 1]))
+    }
+    moveid(txtA[1], x1, y1)
+}
+
+var delay = 40;
+var Xoff = 20;
+var Yoff = 20;
+var txtw = 14;
+var beghtml = '<font color="#0056e3"><b>';
+var
+    endhtml = "</b></font>";
+ns4 = navigator.appName.indexOf("Netscape") >= 0 && document.layers ?
+    true : false;
+ie4 = document.all && !document.getElementById ? true : false;
+ie5 = document.all &&
+document.getElementById ? true : false;
+ns6 = document.getElementById && navigator.appName.indexOf("Netscape") >= 0 ? true : false;
+var txtA = new Array;
+text = text.split("");
+var x1 = 0;
+var y1 = -1e3;
+var t = "";
+for (i = 1; i <= text.length; i++) {
+    t += ns4 ? '<layer left="0" top="-100" width = "'+txtw+'" name = "txt'+i+'" height = "1" > ':'<div id = "txt'+i+'" style = "position:absolute;top:-100px;left:0px;height:1px;width:'+txtw+';visibility:visible;">';
+    t += beghtml + text[i - 1] + endhtml;
+    t += ns4 ? "</layer>" : "</div>"
+}
+document.write(t);
+setTimeout(function () {
+    for (i = 1; i <= text.length; i++) txtA[i] = ns4 ? document.layers["txt" + i] :
+        ie4 ? document.all["txt" + i] : document.getElementById("txt" + i);
+    if (ns4) document.captureEvents(Event.MOUSEMOVE);
+    document.onmousemove = animate;
+    setInterval
+    ("movetxts()", delay)
+},1)
+
+//]]>
+
+    </script>
+  </body>
+</html>
