@@ -91,12 +91,13 @@
 			edgeSettingsContext.fill();
 		});
 	});
-	// const resultDomElement = document.getElementById('result');
-	const resultDomElement = document.createElement('canvas');
+	const resultDomElement = document.getElementById('result');
 	resultDomElement.width = 480;
 	resultDomElement.height = 360;
 	const resultContext = resultDomElement.getContext('2d');
-	document.getElementById('show-selection').addEventListener(c, function () {
+	const showSelectionButton = document.getElementById('show-selection');
+	showSelectionButton.addEventListener(c, function () {
+		showSelectionButton.disabled = true;
 		const targetWidth = resultDomElement.width;
 		const targetHeight = resultDomElement.height;
 		// lépésközök a vizszintes szakaszokon (1==fent, 2==lent)
@@ -140,8 +141,7 @@
 			}
 
 			drawSomeData(0, x, sx, sy, dx, dy, targetHeight, () => {
-				document.body.removeChild(document.getElementById('result'));
-				document.body.appendChild(resultDomElement);
+				showSelectionButton.disabled = false;
 			});
 		}
 	});
