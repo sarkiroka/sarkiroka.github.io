@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="hu">
+	<head>
+		<meta charset="UTF-8">
+		<title>Kamera kép bizgerentyű</title>
+		<script src="camshot.js"></script>
+	</head>
+
+	<body>
+		<select id="video-source"></select>
+		<br />
+		<button id="first_step">1. kérem a kamerát</button>
+		<br />
+		<video id="camera-video" width="480" height="360" autoplay></video>
+		<br />
+		<button id="take-a-photo">2. készítek egy képet</button>
+		<br />
+		<canvas id="camera-shot" width="480" height="360"></canvas>
+		<br />
+		<button id="set-edges">3. bejelölöm a széleket</button>
+		<br />
+		<canvas id="edge-settings" width="480" height="360"></canvas>
+		<br />
+		<button id="show-selection">4. kiemelem a bejelölt részt</button>
+		<br />
+		<canvas id="result" width="480" height="360"></canvas>
+	</body>
+</html>
