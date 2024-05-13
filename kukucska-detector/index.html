@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bejelentkezés</title>
+  <script defer src="face-api.min.js"></script>
+  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    video {
+      position: absolute;
+      z-index: 1;
+      left: 0;
+      top:0;
+    }
+    .visualfeedback {
+      position: absolute;
+      left:0;
+      top:0;
+      z-index: -1;
+    }
+    .videocontainer {
+      position: relative;
+    }
+    .videocontainer .layer {
+      position: absolute;
+      width: 720px;
+      height: 560px;
+      top: 0;
+      left:0;
+      z-index: 10;
+      background: #fff;
+    }
+    .loginbox.danger > form {
+      display: none;
+    }
+    .loginbox.danger > p {
+      color: #600;
+      font-size: 24px;
+      display: block;
+    }
+    .loginbox.ok > form {
+      display: block;
+    }
+    .loginbox.ok > p {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="visualfeedback">
+    <div class="videocontainer">
+      <video id="video" width="720" height="560" autoplay muted></video>
+      <div class="layer"></div>
+    </div>
+  </div>
+  <div class="loginbox danger" style="display: flex; justify-content: center; align-items: center; height: 100vh;" id="loginbox">
+    <form action="#" method="post">
+      <div style="text-align: center;">
+        <img src="logo.svg" alt="TrustBank Logo">
+      </div>
+      <div>
+        <input type="email" name="email" placeholder="Email cím" required maxlength="100">
+      </div>
+      <div>
+        <input type="password" name="password" placeholder="Jelszó" required maxlength="100">
+      </div>
+      <div>
+        <a href="#">Elfelejtett jelszó?</a>
+      </div>
+      <div>
+        <button type="submit">Belépés</button>
+        <a class="btn" href="https://fiktivbank.hu">Mégsem</a>
+      </div>
+    </form>
+    <p>A bejelentkezésnél ügyeljen arra, hogy más ne tudja meglesni a bejelentkezési adatait!</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,80 @@
+/* Általános formázás a teljes űrlapra */
+form {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: 600px;
+    margin: 20px auto;
+}
+
+/* Középre igazítás */
+div {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Nagyított logó kép */
+img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Beviteli mezők stílusa */
+input[type="email"], input[type="password"] {
+    width: 90%; /* Töltse ki a konténer szélességének nagy részét */
+    padding: 10px; /* Nagyobb padding a könnyű olvasáshoz */
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px; /* Nagyobb betűméret */
+}
+
+/* Hivatkozások stílusa */
+a {
+    color: #0077cc;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Gombok stílusa */
+button, .btn {
+    width: 100px;
+    margin: 10px 20px 0;
+}
+.btn {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ddd;
+    color: #666;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #0077cc;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+/* Mégsem gomb külön stílusa */
+button[type="button"] {
+    background-color: #f44336;
+}
+
+button[type="button"]:hover {
+    background-color: #d32f2f;
+}
