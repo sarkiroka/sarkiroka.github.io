@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ismerkedős párosító – baráti hangulatban</title>
+  <style>
+    :root{
+      --bg:#f7faf9;
+      --card:#ffffff;
+      --ink:#0f1f1a;
+      --muted:#51645c;
+      --brand:#2ea37a;
+      --brand-2:#f2a561;
+      --ring: #a7e2c9;
+      --danger:#d3455b;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font:16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background: radial-gradient(1200px 600px at 10% -10%, #e9fff7, transparent) no-repeat,
+                  radial-gradient(1000px 500px at 110% 0%, #fff4e9, transparent) no-repeat,
+                  var(--bg);
+    }
+    .wrap{max-width:920px; margin:24px auto 96px; padding:0 16px}
+    header{
+      display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+    .title{
+      display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px;
+    }
+    .title .badge{
+      font-size:12px; padding:2px 8px; border-radius:999px; background:#fff; color:var(--brand);
+      border:1px solid #d7f4e7;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid #e8efec;
+      border-radius:18px;
+      padding:18px;
+      box-shadow: 0 10px 24px rgba(15,31,26,0.06);
+    }
+
+    .toolbar{
+      display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+    }
+    button, .btn{
+      appearance:none; border:0; background:var(--brand); color:white; font-weight:600;
+      padding:10px 14px; border-radius:12px; cursor:pointer; transition:.2s transform,.2s box-shadow;
+      box-shadow: 0 6px 16px rgba(46,163,122,.25);
+    }
+    button.secondary{ background:#fff; color:var(--ink); border:1px solid #dfe7e4; box-shadow:none }
+    button.ghost{ background:transparent; color:var(--muted); border:1px dashed #d5e6df; box-shadow:none }
+    button.danger{ background:var(--danger) }
+    button:focus-visible{ outline:3px solid var(--ring); outline-offset:2px }
+    button:hover{ transform: translateY(-1px) }
+
+    .hint{ color:var(--muted); font-size:14px }
+    .views{ margin-top:14px }
+    .view{ display:none }
+    .view.active{ display:block }
+
+    table{
+      width:100%; border-collapse:separate; border-spacing:0 10px; margin-top:8px;
+    }
+    thead th{
+      text-align:left; font-size:13px; letter-spacing:.2px; color:var(--muted); padding:0 10px;
+    }
+    tbody tr{
+      background:#fbfdfc; border:1px solid #ecf3f0; border-radius:12px; overflow:hidden;
+    }
+    tbody td{
+      padding:10px;
+    }
+    tbody tr td:first-child{ width:56px; text-align:center; color:#8aa199 }
+    input[type="text"]{
+      width:100%; padding:10px 12px; border-radius:10px; border:1px solid #dbe7e2; outline:none;
+      background:#fff;
+    }
+    input[type="text"]:focus{ border-color:#bfead8; box-shadow:0 0 0 3px #eaf8f2 }
+    .row-actions{ display:flex; gap:8px; justify-content:flex-end }
+    .empty{
+      padding:12px; text-align:center; color:var(--muted); border:1px dashed #dfe7e4; border-radius:12px;
+      background:#fcfffe;
+    }
+
+    .divider{ height:1px; background:linear-gradient(90deg, transparent, #e8efec, transparent); margin:16px 0 }
+
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      background:#f6fff9; border:1px solid #dff4ea; color:#1d5c47; padding:8px 10px; border-radius:999px;
+      font-size:14px
+    }
+
+    section.round{
+      border:1px solid #e8efec; border-radius:14px; padding:14px; background:#fff;
+      box-shadow: 0 8px 18px rgba(15,31,26,0.05);
+    }
+    .round h3{
+      margin:0 0 8px; font-size:16px; display:flex; align-items:center; gap:8px
+    }
+    .pairs{
+      display:flex; flex-wrap:wrap; gap:8px
+    }
+    .pair{
+      padding:8px 10px; border-radius:999px; background:#f8fffb; border:1px solid #e0f3ec; font-weight:600
+    }
+    .grid{
+      display:grid; gap:12px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    .grid .col-6{ grid-column: span 6 }
+    .grid .col-12{ grid-column: span 12 }
+    @media (max-width: 740px){
+      .grid .col-6{ grid-column: span 12 }
+    }
+    .warning{ color:#8a3b3b; background:#fff5f5; border:1px solid #ffd9d9; padding:10px 12px; border-radius:12px }
+    .success{ color:#1d5c47 }
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0 }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <span style="font-size:22px">🤝 Ismerkedős párosító</span>
+        <span class="badge">baráti hangulat</span>
+      </div>
+      <div class="toolbar">
+        <button id="toggleViewBtn" class="secondary" title="Nézet váltása">Nézet váltása</button>
+        <button id="drawBtn" title="Sorsolás nézetben aktív">Sorsolás</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <p class="hint">Add meg a neveket, majd válts a sorsolás nézetre. Ha páratlan a létszám, kiválasztható, ki maradjon ki a körökből.</p>
+
+      <div class="views">
+        <!-- Adatbevitel nézet -->
+        <div id="view-input" class="view active" aria-labelledby="input-title">
+          <h2 id="input-title" class="sr-only">Adatbevitel</h2>
+
+          <div class="toolbar" style="margin-bottom:8px">
+            <span class="pill">📋 Résztvevők: <strong id="count">0</strong> fő</span>
+            <button id="addRowBtn" class="ghost">Új sor</button>
+            <button id="clearAllBtn" class="ghost">Mind törlése</button>
+          </div>
+
+          <table id="namesTable" aria-describedby="names-help">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Név</th>
+                <th class="row-actions">Művelet</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              <!-- Dinamikus sorok -->
+            </tbody>
+          </table>
+          <div id="names-help" class="hint" style="margin-top:10px">Írd be a neveket a táblázatba. Üres sorokat a rendszer figyelmen kívül hagy.</div>
+          <div id="emptyState" class="empty" style="margin-top:10px">Még nincs név. Kezdd az első sor felvételével.</div>
+        </div>
+
+        <!-- Sorsolás nézet -->
+        <div id="view-draw" class="view" aria-labelledby="draw-title">
+          <h2 id="draw-title" class="sr-only">Sorsolás</h2>
+
+          <div class="grid" style="margin-bottom:6px">
+            <div class="col-12">
+              <div id="oddWrap" class="toolbar" style="display:none">
+                <label for="excludeSelect" class="pill">🧩 Páratlan létszám – ki maradjon ki?</label>
+                <select id="excludeSelect" style="padding:10px 12px; border-radius:10px; border:1px solid #dbe7e2; background:#fff"></select>
+              </div>
+              <div id="message" class="hint" style="margin-top:6px"></div>
+            </div>
+          </div>
+
+          <div id="results" class="grid" style="margin-top:10px">
+            <!-- Dinamikus körök -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="hint" style="margin-top:10px">Tipp, Róka: ha variálni szeretnéd a párosokat, a neveket rendezd új sorrendbe, majd futtasd újra a sorsolást.</p>
+  </div>
+
+  <script>
+    // ====== Segédfüggvények ======
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+
+    function uniqueNonEmptyNames(){
+      const values = $$("#tbody input.name").map(i => i.value.trim()).filter(v => v.length>0);
+      const seen = new Set();
+      const out = [];
+      for(const v of values){
+        const key = v.toLocaleLowerCase();
+        if(!seen.has(key)){ seen.add(key); out.push(v); }
+      }
+      return out;
+    }
+
+    function updateCount(){
+      $("#count").textContent = uniqueNonEmptyNames().length;
+      $("#emptyState").style.display = $("#tbody").children.length ? "none" : "block";
+    }
+
+    function makeRow(value=""){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="idx"></td>
+        <td><input type="text" class="name" placeholder="Név (pl. Anna)" value="${value.replace(/"/g,'&quot;')}" /></td>
+        <td class="row-actions">
+          <button class="secondary small remove">Törlés</button>
+        </td>
+      `;
+      $("#tbody").appendChild(tr);
+      renumber();
+    }
+
+    function renumber(){
+      $$("#tbody tr").forEach((tr,idx)=>{ tr.querySelector(".idx").textContent = idx+1; });
+      updateCount();
+    }
+
+    function clearAll(){
+      $("#tbody").innerHTML = "";
+      updateCount();
+    }
+
+    // ====== Körök generálása (round-robin, sorrend nem számít) ======
+    function generateRounds(rawNames){
+      // Előfeltétel: páros elemszám
+      const n = rawNames.length;
+      if(n<2) return [];
+      // random kiindulás, hogy "sorsolás" hangulatú legyen
+      const names = shuffle(rawNames);
+      const rounds = [];
+      const fixed = names[0];
+      let rest = names.slice(1); // forgatjuk
+
+      const roundsCount = n - 1;
+      for(let r=0;r<roundsCount;r++){
+        const lineup = [fixed, ...rest];
+        const pairs = [];
+        for(let i=0;i<n/2;i++){
+          const a = lineup[i];
+          const b = lineup[n-1-i];
+          pairs.push([a,b]);
+        }
+        rounds.push(pairs);
+        // körforgás: utolsót az elejére
+        rest = [rest[rest.length-1], ...rest.slice(0, rest.length-1)];
+      }
+      return rounds;
+    }
+
+    // ====== Nézetek, események ======
+    const viewInput = $("#view-input");
+    const viewDraw  = $("#view-draw");
+    const toggleBtn = $("#toggleViewBtn");
+    const drawBtn   = $("#drawBtn");
+    const messageEl = $("#message");
+    const resultsEl = $("#results");
+    const oddWrap   = $("#oddWrap");
+    const excludeSelect = $("#excludeSelect");
+
+    function showView(which){
+      if(which==="input"){
+        viewInput.classList.add("active");
+        viewDraw.classList.remove("active");
+      } else {
+        viewDraw.classList.add("active");
+        viewInput.classList.remove("active");
+        prepareDrawView(); // frissítsük a páratlan/ki maradjon ki állapotot
+      }
+    }
+
+    toggleBtn.addEventListener("click", ()=>{
+      if(viewInput.classList.contains("active")) showView("draw");
+      else showView("input");
+    });
+
+    $("#addRowBtn").addEventListener("click", ()=> makeRow(""));
+    $("#clearAllBtn").addEventListener("click", clearAll);
+
+    $("#tbody").addEventListener("input", (e)=>{
+      if(e.target.matches("input.name")) updateCount();
+    });
+
+    $("#tbody").addEventListener("click", (e)=>{
+      if(e.target.matches(".remove")){
+        e.target.closest("tr").remove();
+        renumber();
+      }
+    });
+
+    function prepareDrawView(){
+      const names = uniqueNonEmptyNames();
+      resultsEl.innerHTML = "";
+      messageEl.textContent = "";
+      excludeSelect.innerHTML = "";
+
+      if(names.length===0){
+        messageEl.innerHTML = `<div class="warning">Adj meg legalább két nevet az adatbevitel nézetben.</div>`;
+        return;
+      }
+      if(names.length===1){
+        messageEl.innerHTML = `<div class="warning">Egy név kevés a párosításhoz. Adj hozzá még neveket.</div>`;
+        return;
+      }
+
+      if(names.length % 2 === 1){
+        // páratlan – válasszunk ki egyet, aki kimarad
+        oddWrap.style.display = "flex";
+        excludeSelect.innerHTML = names.map(n=>`<option>${n.replace(/</g,"&lt;")}</option>`).join("");
+      } else {
+        oddWrap.style.display = "none";
+      }
+    }
+
+    drawBtn.addEventListener("click", ()=>{
+      // csak a sorsolás nézetben értelmes
+      const all = uniqueNonEmptyNames();
+      resultsEl.innerHTML = "";
+      messageEl.textContent = "";
+
+      if(all.length<2){
+        messageEl.innerHTML = `<div class="warning">Minimum két résztvevő szükséges.</div>`;
+        return;
+      }
+
+      let working = all.slice();
+      let excluded = null;
+
+      if(working.length % 2 === 1){
+        excluded = excludeSelect.value || working[0];
+        working = working.filter(n => n !== excluded);
+        messageEl.innerHTML = `<span class="pill">ℹ️ Kimarad ebben a menetben: <strong>${excluded}</strong></span>`;
+      }
+
+      const rounds = generateRounds(working);
+
+      if(rounds.length===0){
+        messageEl.innerHTML = `<div class="warning">Nem sikerült köröket képezni. Ellenőrizd a neveket.</div>`;
+        return;
+      }
+
+      // Kirajzolás
+      rounds.forEach((pairs, idx)=>{
+        const sec = document.createElement("section");
+        sec.className = "round";
+        sec.innerHTML = `
+          <h3>🧭 ${idx+1}. kör</h3>
+          <div class="pairs">${pairs.map(p=>`<span class="pair">${escapeHTML(p[0])} – ${escapeHTML(p[1])}</span>`).join("")}</div>
+        `;
+        resultsEl.appendChild(sec);
+      });
+
+      if(excluded){
+        const info = document.createElement("div");
+        info.className = "hint";
+        info.style.marginTop = "12px";
+        info.textContent = `${excluded} ebben a sorsolásban pihent. Új sorsolással rotálható a kimaradó személy.`;
+        resultsEl.appendChild(info);
+      }
+      // kis elválasztó
+      const div = document.createElement("div");
+      div.className = "divider";
+      resultsEl.appendChild(div);
+
+      // statisztika
+      const roundsCount = rounds.length;
+      const perRound = working.length/2;
+      const stat = document.createElement("div");
+      stat.className = "hint success";
+      stat.textContent = `Körök száma: ${roundsCount} • Pár egy körben: ${perRound} • Résztvevők: ${working.length}${excluded?` (+1 kimaradó)`:``}`;
+      resultsEl.appendChild(stat);
+    });
+
+    function escapeHTML(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])) }
+
+    // Kezdő állapot: egy üres sor
+    makeRow("");
+
+    // Ha a felhasználó Entert üt egy név mezőben, vegyünk fel új sort
+    $("#tbody").addEventListener("keydown", (e)=>{
+      if(e.target.matches("input.name") && e.key==="Enter"){
+        e.preventDefault();
+        const current = e.target;
+        if(current.value.trim().length===0) return; // üresre ne
+        makeRow("");
+        // fókusz az új sorra
+        const inputs = $$("#tbody input.name");
+        inputs[inputs.length-1].focus();
+      }
+    });
+
+    // Váltáskor automatikusan frissítsük a sorsolás nézetet
+    document.addEventListener("visibilitychange", ()=>{
+      if(!document.hidden && viewDraw.classList.contains("active")) prepareDrawView();
+    });
+  </script>
+</body>
+</html>
