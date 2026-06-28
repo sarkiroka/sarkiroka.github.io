@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Út szimuláció</title>
+	<link rel="stylesheet" href="source/styles/main.css">
+</head>
+<body>
+	<canvas id="simulation-canvas"></canvas>
+	<div class="control-panel">
+		<label class="control-label" for="simulation-speed-slider">
+			Szimuláció sebessége
+			<span id="simulation-speed-value">1</span>x
+		</label>
+		<input
+			id="simulation-speed-slider"
+			type="range"
+			min="0"
+			max="20"
+			step="0.1"
+			value="1"
+			maxlength="4"
+		>
+	</div>
+	<script src="source/terrain-kinds.js"></script>
+	<script src="source/vehicle-types.js"></script>
+	<script src="source/constants/physics-constants.js"></script>
+	<script src="source/constants/simulation-constants.js"></script>
+	<script src="source/maps/building-block-loop.js"></script>
+	<script src="source/geometry/map-geometry.js"></script>
+	<script src="source/geometry/route-path.js"></script>
+	<script src="source/physics/turn-grip.js"></script>
+	<script src="source/physics/collision-check.js"></script>
+	<script src="source/perception/vehicle-sight.js"></script>
+	<script src="source/control/speed-control.js"></script>
+	<script src="source/control/lane-control.js"></script>
+	<script src="source/control/vehicle-intent.js"></script>
+	<script src="source/control/overtake-control.js"></script>
+	<script src="source/vehicle-brain/vehicle-request-kinds.js"></script>
+	<script src="source/vehicle-brain/corner-planning.js"></script>
+	<script src="source/vehicle-brain/overtake-planning.js"></script>
+	<script src="source/vehicle-brain/vehicle-brain.js"></script>
+	<script src="source/simulation/road-constraint.js"></script>
+	<script src="source/simulation/vehicle-motion.js"></script>
+	<script src="source/control/vehicle-state.js"></script>
+	<script src="source/simulation/simulation-tick.js"></script>
+	<script src="source/simulation/position-recorder.js"></script>
+	<script src="source/simulation/vehicle-fleet.js"></script>
+	<script src="source/render/view-transform.js"></script>
+	<script src="source/render/map-renderer.js"></script>
+	<script src="source/render/vehicle-renderer.js"></script>
+	<script src="source/render/render-loop.js"></script>
+	<script src="source/bootstrap.js"></script>
+</body>
+</html>
