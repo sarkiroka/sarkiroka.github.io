@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Út vezetés</title>
+	<link rel="stylesheet" href="source/styles/main.css">
+</head>
+<body>
+	<div id="population-control-panel">
+		<button id="evolution-settings-button" type="button" title="Evolúció beállítások">
+			<svg class="gear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+				<path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 15.6 12 3.6 3.6 0 0 1 12 15.6z"/>
+			</svg>
+		</button>
+	</div>
+	<div id="evolution-settings-overlay" class="settings-overlay" hidden>
+		<div class="settings-dialog">
+			<h2 class="settings-title">Evolúció beállítások</h2>
+			<div class="settings-field">
+				<label for="population-size-slider">Populáció mérete: <span id="population-size-value">100</span></label>
+				<input id="population-size-slider" type="range" min="10" max="1000" step="1" value="100">
+			</div>
+			<div class="settings-field">
+				<label for="round-duration-slider">Kör időtartama: <span id="round-duration-value">30 s</span></label>
+				<input id="round-duration-slider" type="range" min="15" max="3601" step="1" value="30">
+			</div>
+			<div class="settings-field">
+				<label for="mutation-probability-slider">Mutáció valószínűség: <span id="mutation-probability-value">3.0 %</span></label>
+				<input id="mutation-probability-slider" type="range" min="0" max="100" step="1" value="30">
+			</div>
+			<p class="settings-hint">A populáció méretének módosítása újraindítja az evolúciót. A kör időtartama 3600 s felett végtelen.</p>
+			<div class="settings-danger-zone">
+				<button id="population-clear-button" type="button" title="Mentett populáció törlése és újraindítás">Populáció törlése</button>
+			</div>
+			<div class="settings-actions">
+				<button id="evolution-settings-cancel-button" type="button">Mégse</button>
+				<button id="evolution-settings-apply-button" type="button">Alkalmaz</button>
+			</div>
+		</div>
+		<div id="population-clear-confirm-overlay" class="confirm-overlay settings-nested-confirm-overlay" hidden>
+			<div class="confirm-dialog">
+				<p class="confirm-message">Törlöd a mentett populációt? A szimuláció új, véletlenszerű populációval indul.</p>
+				<div class="confirm-actions">
+					<button id="population-clear-cancel-button" type="button">Mégse</button>
+					<button id="population-clear-confirm-button" type="button">Törlés</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="simulation-speed-panel">
+		<label for="simulation-speed-slider" id="simulation-speed-label">Sebesség: 1x</label>
+		<input id="simulation-speed-slider" type="range" min="0" max="100" step="1" value="1">
+	</div>
+	<canvas id="map-canvas"></canvas>
+	<script src="source/terrain-kinds.js"></script>
+	<script src="source/constants/vehicle-constants.js"></script>
+	<script src="source/constants/evolution-constants.js"></script>
+	<script src="source/evolution/evolution-settings.js"></script>
+	<script src="source/vehicle/vehicle-definition.js"></script>
+	<script src="source/vehicle/evolution-vehicle-definition.js"></script>
+	<script src="source/maps/building-block-loop.js"></script>
+	<script src="source/geometry/construction-geometry.js"></script>
+	<script src="source/geometry/map-geometry.js"></script>
+	<script src="source/neural/driving-network.js"></script>
+	<script src="source/neural/genome.js"></script>
+	<script src="source/neural/control-output-adapter.js"></script>
+	<script src="source/input/user-input.js"></script>
+	<script src="source/input/simulation-speed-control.js"></script>
+	<script src="source/input/evolution-settings-panel.js"></script>
+	<script src="source/vehicle/vehicle-state.js"></script>
+	<script src="source/vehicle/vehicle-collision-check.js"></script>
+	<script src="source/vehicle/vehicle-update.js"></script>
+	<script src="source/constants/perception-constants.js"></script>
+	<script src="source/perception/road-cross-section.js"></script>
+	<script src="source/perception/vehicle-perception.js"></script>
+	<script src="source/evolution/population-individual.js"></script>
+	<script src="source/evolution/population-storage.js"></script>
+	<script src="source/evolution/generation-cycle.js"></script>
+	<script src="source/render/view-transform.js"></script>
+	<script src="source/render/map-renderer.js"></script>
+	<script src="source/render/vehicle-renderer.js"></script>
+	<script src="source/render/perception-visual-helper.js"></script>
+	<script src="source/render/hud-renderer.js"></script>
+	<script src="source/evolution/evolution-render-loop.js"></script>
+	<script src="source/bootstrap.js"></script>
+</body>
+</html>

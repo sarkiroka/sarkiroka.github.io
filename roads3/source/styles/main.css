@@ -1,0 +1,232 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background-color: #1a1a2e;
+	font-family: sans-serif;
+}
+
+#map-canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+#simulation-speed-panel {
+	position: fixed;
+	top: 12px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	padding: 10px 14px;
+	background: rgba(20, 20, 35, 0.88);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	border-radius: 8px;
+	color: rgba(255, 255, 255, 0.92);
+	font-size: 14px;
+}
+
+#simulation-speed-slider {
+	width: 220px;
+}
+
+#population-control-panel {
+	position: fixed;
+	top: 76px;
+	right: 12px;
+	z-index: 10;
+}
+
+#evolution-settings-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	background: rgba(50, 50, 70, 0.92);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	border-radius: 6px;
+	color: rgba(255, 255, 255, 0.92);
+	cursor: pointer;
+}
+
+#evolution-settings-button:hover {
+	background: rgba(70, 70, 95, 0.96);
+}
+
+#evolution-settings-button .gear-icon {
+	width: 20px;
+	height: 20px;
+}
+
+.confirm-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.55);
+	backdrop-filter: blur(2px);
+}
+
+.confirm-overlay[hidden] {
+	display: none;
+}
+
+.confirm-dialog {
+	min-width: 320px;
+	max-width: 420px;
+	padding: 20px;
+	background: rgba(20, 20, 35, 0.96);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	border-radius: 10px;
+	color: rgba(255, 255, 255, 0.92);
+}
+
+.confirm-message {
+	margin-bottom: 16px;
+	font-size: 15px;
+	line-height: 1.45;
+}
+
+.confirm-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.confirm-actions button {
+	padding: 8px 14px;
+	border-radius: 6px;
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	font-size: 14px;
+	cursor: pointer;
+	color: rgba(255, 255, 255, 0.92);
+	background: rgba(50, 50, 70, 0.9);
+}
+
+#population-clear-confirm-button {
+	background: rgba(120, 40, 40, 0.92);
+	border-color: rgba(255, 120, 120, 0.35);
+}
+
+#population-clear-confirm-button:hover {
+	background: rgba(150, 50, 50, 0.96);
+}
+
+.settings-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.5);
+	backdrop-filter: blur(2px);
+}
+
+.settings-overlay[hidden] {
+	display: none;
+}
+
+.settings-dialog {
+	min-width: 340px;
+	max-width: 440px;
+	padding: 22px;
+	background: rgba(20, 20, 35, 0.96);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	border-radius: 10px;
+	color: rgba(255, 255, 255, 0.92);
+}
+
+.settings-title {
+	margin-bottom: 18px;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.settings-field {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-bottom: 16px;
+}
+
+.settings-field label {
+	font-size: 14px;
+}
+
+.settings-field input[type="range"] {
+	width: 100%;
+}
+
+.settings-hint {
+	margin-bottom: 16px;
+	font-size: 13px;
+	line-height: 1.45;
+	color: rgba(255, 255, 255, 0.72);
+}
+
+.settings-danger-zone {
+	margin-bottom: 18px;
+	padding-top: 4px;
+	border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+#population-clear-button {
+	padding: 8px 12px;
+	background: rgba(120, 40, 40, 0.92);
+	border: 1px solid rgba(255, 120, 120, 0.35);
+	border-radius: 6px;
+	color: rgba(255, 255, 255, 0.92);
+	font-size: 13px;
+	cursor: pointer;
+}
+
+#population-clear-button:hover {
+	background: rgba(150, 50, 50, 0.96);
+}
+
+.settings-nested-confirm-overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+}
+
+.settings-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.settings-actions button {
+	padding: 8px 14px;
+	border-radius: 6px;
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	font-size: 14px;
+	cursor: pointer;
+	color: rgba(255, 255, 255, 0.92);
+	background: rgba(50, 50, 70, 0.9);
+}
+
+#evolution-settings-apply-button {
+	background: rgba(40, 90, 140, 0.92);
+	border-color: rgba(120, 180, 255, 0.35);
+}
+
+#evolution-settings-apply-button:hover {
+	background: rgba(50, 110, 165, 0.96);
+}
